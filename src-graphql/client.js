@@ -1,4 +1,4 @@
-import GraphQLJSClient from '@shopify/graphql-js-client';
+import GraphQLJSClient, {_enum} from '@shopify/graphql-js-client';
 import types from '../types';
 import base64Encode from './base64encode';
 import './isomorphic-fetch';
@@ -105,6 +105,38 @@ export default class Client {
     if (queryObject.limit) {
       options.first = queryObject.limit;
     }
+    if (queryObject.sortBy) {
+      let sortKey;
+
+      switch (queryObject.sortBy) {
+        case 'title-ascending':
+          sortKey = _enum('TITLE');
+          break;
+        case 'title-descending':
+          sortKey = _enum('TITLE');
+          options.reverse = true;
+          break;
+        case 'updated-ascending':
+          sortKey = _enum('UPDATED_AT');
+          break;
+        case 'updated-descending':
+          sortKey = _enum('UPDATED_AT');
+          options.reverse = true;
+          break;
+        case 'created-ascending':
+          sortKey = _enum('CREATED_AT');
+          break;
+        case 'created-descending':
+          sortKey = _enum('CREATED_AT');
+          options.reverse = true;
+          break;
+      }
+
+      options.sortKey = sortKey;
+    }
+    if (queryObject.limit) {
+      options.first = queryObject.limit;
+    }
 
     options.query = queryArgStrings.join(' ');
 
@@ -131,6 +163,28 @@ export default class Client {
     }
     if (queryObject.updatedAtMin) {
       queryArgStrings.push(`updated_at:>='${queryObject.updatedAtMin}'`);
+    }
+    if (queryObject.sortBy) {
+      let sortKey;
+
+      switch (queryObject.sortBy) {
+        case 'title-ascending':
+          sortKey = _enum('TITLE');
+          break;
+        case 'title-descending':
+          sortKey = _enum('TITLE');
+          options.reverse = true;
+          break;
+        case 'updated-ascending':
+          sortKey = _enum('UPDATED_AT');
+          break;
+        case 'updated-descending':
+          sortKey = _enum('UPDATED_AT');
+          options.reverse = true;
+          break;
+      }
+
+      options.sortKey = sortKey;
     }
     if (queryObject.limit) {
       options.first = queryObject.limit;
