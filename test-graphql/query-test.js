@@ -332,6 +332,8 @@ suite('query-test', () => {
       checkoutCreate {
         checkout {
           id
+          ready
+          note
           createdAt
           updatedAt
           requiresShipping
