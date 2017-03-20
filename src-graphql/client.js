@@ -26,6 +26,9 @@ function fetchAllProductResources(product, client) {
   return promises;
 }
 
+/**
+ * @class Client
+ */
 export default class Client {
   constructor(config, GraphQLClientClass = GraphQLJSClient) {
     const apiUrl = `https://${config.domain}/api/graphql`;
@@ -100,6 +103,26 @@ export default class Client {
     });
   }
 
+/**
+ * Creates a checkout.
+ *
+ * ```javascript
+ * client.createCheckout({lineItems:[ ... ]}).then(checkout => {
+ *   // do something with the checkout
+ * });
+ * ```
+ *
+ * @method createCheckout
+ * @public
+ * @param {Object} input An input object containing zero or more of:
+ *   @param {String} [input.email] An email connected to the checkout
+ *   @param {Array} [input.lineItems] A list of line items in the checkout
+ *   @param {Object} [input.shippingAddress] A shipping address
+ *   @param {String} [input.note] A note for the checkout
+ *   @param {Array} [input.customAttributes] A list of custom attributes
+ * @param {Function} [query] Callback function to specify fields to query on the checkout returned
+ * @return {Promise|GraphModel} A promise resolving with the created checkout.
+ */
   createCheckout(input, query = checkoutQuery()) {
     const mutation = this.graphQLClient.mutation((root) => {
       root.add('checkoutCreate', {args: {input}}, (checkoutCreate) => {
