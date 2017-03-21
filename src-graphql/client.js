@@ -114,7 +114,7 @@ export default class Client {
  *
  * @method createCheckout
  * @public
- * @param {Object} input An input object containing zero or more of:
+ * @param {Object} [input] An input object containing zero or more of:
  *   @param {String} [input.email] An email connected to the checkout
  *   @param {Array} [input.lineItems] A list of line items in the checkout
  *   @param {Object} [input.shippingAddress] A shipping address
@@ -123,7 +123,7 @@ export default class Client {
  * @param {Function} [query] Callback function to specify fields to query on the checkout returned
  * @return {Promise|GraphModel} A promise resolving with the created checkout.
  */
-  createCheckout(input, query = checkoutQuery()) {
+  createCheckout(input = {}, query = checkoutQuery()) {
     const mutation = this.graphQLClient.mutation((root) => {
       root.add('checkoutCreate', {args: {input}}, (checkoutCreate) => {
         checkoutCreate.add('userErrors', (userErrors) => {
