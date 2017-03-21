@@ -372,6 +372,18 @@ suite('query-test', () => {
                 title
                 variant {
                   id
+                  title
+                  price
+                  weight
+                  image {
+                    id
+                    src
+                    altText
+                  }
+                  selectedOptions {
+                    name
+                    value
+                  }
                 }
                 quantity
                 customAttributes {
